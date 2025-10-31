@@ -1,6 +1,6 @@
 # berita_islami
 
-A new Flutter project.
+A Flutter app displaying Islamic news using public API.
 
 ## Getting Started
 
