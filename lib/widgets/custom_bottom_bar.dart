@@ -36,40 +36,45 @@ class CustomBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 72.h,
-      decoration: BoxDecoration(
-        color: appTheme.gray_100,
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(left: 26.h),
-            child: Text(
-              "Esther Howard     |   3h ago",
-              style: TextStyleHelper.instance.label10RegularPoppins
-                  .copyWith(color: appTheme.gray_600, height: 1.5),
+    // Use SafeArea to respect system bottom insets (e.g. gesture area)
+    // and increase container height slightly to avoid small pixel overflows.
+    return SafeArea(
+      bottom: true,
+      child: Container(
+        height: 80.h,
+        decoration: BoxDecoration(
+          color: appTheme.gray_100,
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 26.h),
+              child: Text(
+                "Esther Howard     |   3h ago",
+                style: TextStyleHelper.instance.label10RegularPoppins
+                    .copyWith(color: appTheme.gray_600, height: 1.5),
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          Container(
-            height: 56.h,
-            padding: EdgeInsets.symmetric(horizontal: 38.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildActiveHomeItem(),
-                ...List.generate(
-                  bottomBarItemList.length - 1,
-                  (index) => _buildBottomBarItem(
-                    bottomBarItemList[index + 1],
-                    selectedIndex == index + 1,
+            SizedBox(height: 4.h),
+            Container(
+              height: 56.h,
+              padding: EdgeInsets.symmetric(horizontal: 38.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildActiveHomeItem(),
+                  ...List.generate(
+                    bottomBarItemList.length - 1,
+                    (index) => _buildBottomBarItem(
+                      bottomBarItemList[index + 1],
+                      selectedIndex == index + 1,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
