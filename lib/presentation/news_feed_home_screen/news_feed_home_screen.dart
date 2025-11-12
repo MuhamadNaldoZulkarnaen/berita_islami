@@ -4,6 +4,10 @@ import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import './news_feed_home_initial_page.dart';
 import './provider/news_feed_home_provider.dart';
+import '../search_screen/search_screen.dart';
+import '../coverage_screen/coverage_screen.dart';
+import '../inbox_screen/inbox_screen.dart';
+import '../profile_screen/profile_screen.dart';
 
 class NewsFeedHomeScreen extends StatefulWidget {
   const NewsFeedHomeScreen({Key? key}) : super(key: key);
@@ -61,22 +65,22 @@ class NewsFeedHomeScreenState extends State<NewsFeedHomeScreen> {
       CustomBottomBarItem(
         icon: ImageConstant.imgNavExplore,
         title: 'Explore',
-        routeName: AppRoutes.newsFeedHomeScreenInitialPage,
+        routeName: AppRoutes.searchScreen,
       ),
       CustomBottomBarItem(
         icon: ImageConstant.imgNavCoverage,
         title: 'Coverage',
-        routeName: AppRoutes.newsFeedHomeScreenInitialPage,
+        routeName: AppRoutes.coverageScreen,
       ),
       CustomBottomBarItem(
         icon: ImageConstant.imgNavInbox,
         title: 'Inbox',
-        routeName: AppRoutes.newsFeedHomeScreenInitialPage,
+        routeName: AppRoutes.inboxScreen,
       ),
       CustomBottomBarItem(
         icon: ImageConstant.imgNavProfile,
         title: 'Profile',
-        routeName: AppRoutes.newsFeedHomeScreenInitialPage,
+        routeName: AppRoutes.profileScreen,
       ),
     ];
 
@@ -104,6 +108,14 @@ class NewsFeedHomeScreenState extends State<NewsFeedHomeScreen> {
     switch (currentRoute) {
       case AppRoutes.newsFeedHomeScreenInitialPage:
         return NewsFeedHomeScreenInitialPage.builder(context);
+      case AppRoutes.searchScreen:
+        return SearchScreen.builder(context);
+      case AppRoutes.coverageScreen:
+        return CoverageScreen.builder(context);
+      case AppRoutes.inboxScreen:
+        return InboxScreen.builder(context);
+      case AppRoutes.profileScreen:
+        return ProfileScreen.builder(context);
       default:
         return Container();
     }
