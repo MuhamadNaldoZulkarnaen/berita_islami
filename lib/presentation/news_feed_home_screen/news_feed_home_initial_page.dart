@@ -175,7 +175,13 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
     return Consumer<NewsFeedHomeProvider>(
       builder: (context, provider, child) {
         return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.h),
+          // Add bottom padding to avoid content being obscured by the
+          // bottom navigation bar and to account for the keyboard (viewInsets).
+          padding: EdgeInsets.only(
+            left: 20.h,
+            right: 20.h,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 80.h,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
