@@ -103,64 +103,88 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
               spacing: 24.h,
               direction: Axis.horizontal,
               children: [
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(0),
-                  child: Text(
-                    'All news',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 0
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'All news',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 0
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(1),
-                  child: Text(
-                    'Business',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 1
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Business',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 1
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(2),
-                  child: Text(
-                    'Politics',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 2
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Politics',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 2
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(3),
-                  child: Text(
-                    'Tech',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 3
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Tech',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 3
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(4),
-                  child: Text(
-                    'Healthy',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 4
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Healthy',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 4
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
+                  borderRadius: BorderRadius.circular(6),
                   onTap: () => provider.updateSelectedCategory(5),
-                  child: Text(
-                    'Science',
-                    style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                        color: provider.selectedCategoryIndex == 5
-                            ? Color(0xFF000000)
-                            : appTheme.gray_400),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Science',
+                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                          color: provider.selectedCategoryIndex == 5
+                              ? Color(0xFF000000)
+                              : appTheme.gray_400),
+                    ),
                   ),
                 ),
               ],
