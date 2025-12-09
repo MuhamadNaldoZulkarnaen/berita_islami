@@ -185,8 +185,26 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: article.image.isNotEmpty
-                    ? Image.network(article.image, width: 80, height: 80, fit: BoxFit.cover)
-                    : Container(width: 80, height: 80, color: Colors.grey.shade200, child: Icon(Icons.image, color: Colors.grey)),
+                    ? Image.network(
+                        article.image,
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 80,
+                            height: 80,
+                            color: Colors.grey.shade200,
+                            child: Icon(Icons.image, color: Colors.grey),
+                          );
+                        },
+                      )
+                    : Container(
+                        width: 80,
+                        height: 80,
+                        color: Colors.grey.shade200,
+                        child: Icon(Icons.image, color: Colors.grey),
+                      ),
               ),
               SizedBox(width: 12),
               Expanded(
@@ -201,7 +219,7 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      article.source ?? '',
+                      article.sourceName ?? '',
                       style: TextStyle(color: Colors.grey[600], fontSize: 12),
                     ),
                   ],
