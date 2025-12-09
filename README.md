@@ -1,16 +1,43 @@
-# berita_islami
+# Berita Islami - Pengecekan Ketentuan Tugas
 
-A Flutter app displaying Islamic news using public API.
+Berdasarkan file dan struktur project yang ada, berikut pengecekan terhadap ketentuan tugas:
 
-## Getting Started
+## a. Sumber Data (API)
+✅ Menggunakan API publik: Sudah terintegrasi GNews API (berita) melalui service di folder `gnews_service.dart`.
 
-This project is a starting point for a Flutter application.
+## b. Fungsionalitas Utama (Minimal)
+**HTTP Request (GET):**
+✅ Sudah ada: Menggunakan package `http` untuk fetch data berita dari internet.
 
-A few resources to get you started if this is your first Flutter project:
+**JSON Serialization:**
+✅ Sudah ada: Data dari API di-parse ke Dart Object (lihat model `GNewsArticle` dan `NewsFeedHomeModel`).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Asynchronous UI:**
+✅ Sudah ada: Loading state (`CircularProgressIndicator`), success state (tampilan berita), error state (pesan error) sudah di-handle di UI.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Saran implementasi (FutureBuilder/State Management):**
+✅ Sudah ada: Menggunakan Provider untuk state management.
+
+**Fitur Pencarian (Search) atau Filter:**
+✅ Sudah ada: Ada halaman `SearchScreen` untuk pencarian/filter berita.
+
+## c. Arsitektur & Manajemen State
+**Service/Repository terpisah dari UI:**
+✅ Sudah ada: Service API (`gnews_service.dart`) terpisah dari UI.
+
+**State Management:**
+✅ Sudah ada: Menggunakan Provider (`news_feed_home_provider.dart`).
+
+## d. Desain Antarmuka
+**Prinsip UI/UX:**
+✅ Sudah diterapkan: UI rapi, ada feedback loading/error, dan layout responsif.
+
+**Indikator visual proses jaringan:**
+✅ Sudah ada: `CircularProgressIndicator` saat loading data.
+
+---
+
+### Kesimpulan
+Project ini sudah sesuai dengan seluruh ketentuan tugas yang diberikan (API publik, HTTP request, JSON parsing, async UI, search/filter, arsitektur terpisah, state management, dan indikator loading/error).
+
+
