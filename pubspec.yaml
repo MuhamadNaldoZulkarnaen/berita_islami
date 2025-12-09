@@ -6,10 +6,10 @@ environment:
   # If your Flutter SDK requires a newer Dart, update this to the appropriate
   # SDK constraint on your machine or install the matching Flutter SDK.
   sdk: '>=3.1.0 <4.0.0'
-dependencies: 
+dependencies:
   flutter:   # 🚨 CRITICAL: Required for every Flutter project - DO NOT REMOVE
     sdk: flutter # 🚨 CRITICAL: Required for every Flutter project - DO NOT REMOVE
-  flutter_localizations: 
+  flutter_localizations:
     sdk: flutter
   # Use versions compatible with Flutter 3.13.x (Dart 3.1.x). Older cached
   # network image releases avoid requiring newer 'path' package versions
@@ -22,6 +22,8 @@ dependencies:
   connectivity_plus: ^5.0.2
   gradient_borders: ^1.0.2
   provider: ^6.1.2
+  http: ^1.1.0
+  url_launcher: ^6.2.4
 dev_dependencies: 
   flutter_test:    # 🚨 CRITICAL: Required for Flutter project testing - DO NOT REMOVE
     sdk: flutter    # 🚨 CRITICAL: Required for Flutter project testing - DO NOT REMOVE

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/app_export.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/custom_image_view.dart';
 import './provider/news_feed_home_provider.dart';
 import './widgets/browse_category_widget.dart';
@@ -57,28 +58,24 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
             'LATEST',
             style: TextStyleHelper.instance.body12BoldPoppins,
           ),
-          Container(
-            width: 44.h,
-            height: 22.h,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                CustomImageView(
-                  imagePath: ImageConstant.imgIntersect,
-                  width: 44.h,
-                  height: 22.h,
+          SizedBox(width: 5.h),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomImageView(
+                imagePath: ImageConstant.imgIntersect,
+                width: 44.h,
+                height: 22.h,
+              ),
+              Positioned(
+                right: 13.h,
+                top: 4.h,
+                child: Text(
+                  'NEWS',
+                  style: TextStyleHelper.instance.label10BoldPoppins.copyWith(color: appTheme.white_A700),
                 ),
-                Positioned(
-                  right: 13.h,
-                  top: 4.h,
-                  child: Text(
-                    'NEWS',
-                    style: TextStyleHelper.instance.label10BoldPoppins
-                        .copyWith(color: appTheme.white_A700),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           Spacer(),
           CustomImageView(
@@ -96,97 +93,27 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
       builder: (context, provider, child) {
         return Container(
           margin: EdgeInsets.only(top: 26.h, left: 26.h),
-          alignment: Alignment.centerLeft,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Wrap(
-              spacing: 24.h,
-              direction: Axis.horizontal,
+            child: Row(
               children: [
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(0),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'All news',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 0
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
+                ...List.generate(6, (index) {
+                  final categories = ['All news', 'Business', 'Politics', 'Tech', 'Healthy', 'Science'];
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(6),
+                    onTap: () => provider.updateSelectedCategory(index),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      child: Text(
+                        categories[index],
+                        style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
+                            color: provider.selectedCategoryIndex == index
+                                ? Color(0xFF000000)
+                                : appTheme.gray_400),
+                      ),
                     ),
-                  ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(1),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Business',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 1
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(2),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Politics',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 2
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(3),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Tech',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 3
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(4),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Healthy',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 4
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(6),
-                  onTap: () => provider.updateSelectedCategory(5),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Science',
-                      style: TextStyleHelper.instance.label10BoldPoppins.copyWith(
-                          color: provider.selectedCategoryIndex == 5
-                              ? Color(0xFF000000)
-                              : appTheme.gray_400),
-                    ),
-                  ),
-                ),
+                  );
+                }),
               ],
             ),
           ),
@@ -198,9 +125,11 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
   Widget _buildMainContent(BuildContext context) {
     return Consumer<NewsFeedHomeProvider>(
       builder: (context, provider, child) {
+        // Fetch headlines on first build
+        if (provider.headlines.isEmpty && !provider.isLoadingHeadlines && provider.errorHeadlines == null) {
+          provider.fetchHeadlines();
+        }
         return SingleChildScrollView(
-          // Add bottom padding to avoid content being obscured by the
-          // bottom navigation bar and to account for the keyboard (viewInsets).
           padding: EdgeInsets.only(
             left: 20.h,
             right: 20.h,
@@ -210,6 +139,17 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 22.h),
+              // Headline dari GNews
+              if (provider.isLoadingHeadlines)
+                Center(child: CircularProgressIndicator()),
+              if (provider.errorHeadlines != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Gagal mengambil berita: ${provider.errorHeadlines}', style: TextStyle(color: Colors.red)),
+                ),
+              if (provider.headlines.isNotEmpty)
+                ...provider.headlines.take(3).map((article) => _buildGNewsHeadline(context, article)).toList(),
+              SizedBox(height: 10.h),
               _buildFeaturedArticle(context, provider),
               SizedBox(height: 10.h),
               _buildPopularRedactions(context, provider),
@@ -225,8 +165,56 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
     );
   }
 
-  Widget _buildFeaturedArticle(
-      BuildContext context, NewsFeedHomeProvider provider) {
+  Widget _buildGNewsHeadline(BuildContext context, dynamic article) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () async {
+          if (article.url.isNotEmpty) {
+            final uri = Uri.parse(article.url);
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: article.image.isNotEmpty
+                    ? Image.network(article.image, width: 80, height: 80, fit: BoxFit.cover)
+                    : Container(width: 80, height: 80, color: Colors.grey.shade200, child: Icon(Icons.image, color: Colors.grey)),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      article.title ?? '',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      article.source ?? '',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeaturedArticle(BuildContext context, NewsFeedHomeProvider provider) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.h),
@@ -260,8 +248,7 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
               SizedBox(width: 6.h),
               Text(
                 '36min ago',
-                style: TextStyleHelper.instance.label9LightPoppins
-                    .copyWith(color: appTheme.gray_400),
+                style: TextStyleHelper.instance.label9LightPoppins.copyWith(color: appTheme.gray_400),
               ),
             ],
           ),
@@ -367,8 +354,7 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPopularRedactions(
-      BuildContext context, NewsFeedHomeProvider provider) {
+  Widget _buildPopularRedactions(BuildContext context, NewsFeedHomeProvider provider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -381,8 +367,7 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
             ),
             Text(
               'View All',
-              style: TextStyleHelper.instance.label10BoldPoppins
-                  .copyWith(color: appTheme.gray_400),
+              style: TextStyleHelper.instance.label10BoldPoppins.copyWith(color: appTheme.gray_400),
             ),
           ],
         ),
@@ -465,26 +450,26 @@ class NewsFeedHomeScreenInitialPage extends StatelessWidget {
   Widget _buildSecondaryArticle(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 6.h),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(top: 6.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '2021\'s most brilliant horror movie',
-                        style: TextStyleHelper.instance.body12MediumPoppins,
-                      ),
-                      SizedBox(height: 2.h),
-                      Text(
-                        'The new Candyman and how horror is\nreckoning with racism',
-                        style: TextStyleHelper.instance.label10RegularPoppins,
-                      ),
-                    ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '2021\'s most brilliant horror movie',
+                    style: TextStyleHelper.instance.body12MediumPoppins,
                   ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    'The new Candyman and how horror is\nreckoning with racism',
+                    style: TextStyleHelper.instance.label10RegularPoppins,
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(width: 12.h),

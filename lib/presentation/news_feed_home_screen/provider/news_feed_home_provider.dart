@@ -5,14 +5,19 @@ import '../../../core/utils/image_constant.dart';
 import '../models/news_feed_home_model.dart';
 import '../models/news_outlet_item_model.dart';
 
+import '../../../services/gnews_service.dart';
+
 class NewsFeedHomeProvider extends ChangeNotifier {
   NewsFeedHomeModel newsFeedHomeModel = NewsFeedHomeModel();
-
   int selectedBottomBarIndex = 0;
   int selectedCategoryIndex = 0;
   int selectedBrowseIndex = 0;
   bool isLiked = false;
   int likeCount = 800;
+
+  List<GNewsArticle> headlines = [];
+  bool isLoadingHeadlines = false;
+  String? errorHeadlines;
 
   List<NewsOutletItemModel> newsOutlets = [
     NewsOutletItemModel(
@@ -52,6 +57,21 @@ class NewsFeedHomeProvider extends ChangeNotifier {
       isSelected: false,
     ),
   ];
+
+  Future<void> fetchHeadlines() async {
+    isLoadingHeadlines = true;
+    errorHeadlines = null;
+    notifyListeners();
+    try {
+      final service = GNewsService();
+      headlines = await service.fetchTopHeadlines();
+    } catch (e) {
+      errorHeadlines = e.toString();
+    }
+    isLoadingHeadlines = false;
+    notifyListeners();
+  }
+
 
   void updateSelectedIndex(int index) {
     selectedBottomBarIndex = index;
