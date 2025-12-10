@@ -1,43 +1,55 @@
-# Berita Islami - Pengecekan Ketentuan Tugas
+# Berita Islami
 
-Berdasarkan file dan struktur project yang ada, berikut pengecekan terhadap ketentuan tugas:
+A Flutter app for browsing Islamic news headlines, featuring live data from the GNews API, search/filter functionality, and a clean, responsive UI.
 
-## a. Sumber Data (API)
-✅ Menggunakan API publik: Sudah terintegrasi GNews API (berita) melalui service di folder `gnews_service.dart`.
+## Project Explanation
+Berita Islami is a cross-platform mobile app built with Flutter. It fetches and displays Islamic news headlines using the GNews API. The app demonstrates best practices in state management (Provider), asynchronous UI, and separation of concerns (service/repository pattern). Users can search/filter news, view details, and enjoy smooth navigation transitions.
 
-## b. Fungsionalitas Utama (Minimal)
-**HTTP Request (GET):**
-✅ Sudah ada: Menggunakan package `http` untuk fetch data berita dari internet.
+## API Endpoints
+- **GNews API**: https://gnews.io/api/v4/search?q=Islamic&token=YOUR_API_KEY
+  - Replace `YOUR_API_KEY` with your actual GNews API key in `gnews_service.dart`.
+- **Main Service File**: `lib/services/gnews_service.dart`
 
-**JSON Serialization:**
-✅ Sudah ada: Data dari API di-parse ke Dart Object (lihat model `GNewsArticle` dan `NewsFeedHomeModel`).
+## Installation Instructions
+1. **Clone the repository:**
+   ```sh
+   git clone <repo-url>
+   cd berita_islami
+   ```
+2. **Install dependencies:**
+   ```sh
+   flutter pub get
+   ```
+3. **Set up API key:**
+   - Get a free API key from [GNews](https://gnews.io/).
+   - Add your API key to `lib/services/gnews_service.dart`.
+4. **Run the app:**
+   ```sh
+   flutter run
+   ```
+   - For Android/iOS: Connect your device or start an emulator/simulator.
+   - For web: `flutter run -d chrome`
 
-**Asynchronous UI:**
-✅ Sudah ada: Loading state (`CircularProgressIndicator`), success state (tampilan berita), error state (pesan error) sudah di-handle di UI.
+## Main Features
+- Live Islamic news headlines (GNews API)
+- Search and filter news
+- Responsive UI with loading/error indicators
+- Provider-based state management
+- Custom navigation transitions and ripple feedback
 
-**Saran implementasi (FutureBuilder/State Management):**
-✅ Sudah ada: Menggunakan Provider untuk state management.
+## Folder Structure
+- `lib/` - Main Dart code (UI, services, models, providers)
+- `android/`, `ios/`, `web/`, `windows/`, `macos/`, `linux/` - Platform-specific code
+- `test/` - Widget tests
 
-**Fitur Pencarian (Search) atau Filter:**
-✅ Sudah ada: Ada halaman `SearchScreen` untuk pencarian/filter berita.
+## Dependencies
+- provider
+- http
+- cached_network_image
+- flutter_svg
+- shared_preferences
+- connectivity_plus
+- url_launcher
 
-## c. Arsitektur & Manajemen State
-**Service/Repository terpisah dari UI:**
-✅ Sudah ada: Service API (`gnews_service.dart`) terpisah dari UI.
-
-**State Management:**
-✅ Sudah ada: Menggunakan Provider (`news_feed_home_provider.dart`).
-
-## d. Desain Antarmuka
-**Prinsip UI/UX:**
-✅ Sudah diterapkan: UI rapi, ada feedback loading/error, dan layout responsif.
-
-**Indikator visual proses jaringan:**
-✅ Sudah ada: `CircularProgressIndicator` saat loading data.
-
----
-
-### Kesimpulan
-Project ini sudah sesuai dengan seluruh ketentuan tugas yang diberikan (API publik, HTTP request, JSON parsing, async UI, search/filter, arsitektur terpisah, state management, dan indikator loading/error).
-
-
+## License
+See LICENSE file for details.
